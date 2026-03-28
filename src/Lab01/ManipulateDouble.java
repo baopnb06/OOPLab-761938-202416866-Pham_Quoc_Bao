@@ -21,5 +21,6 @@ public class ManipulateDouble {
         } else {
             System.out.println("Thuong 2 so la: " + (num1 / num2));
         }
+        sc.close();
     }
 }
