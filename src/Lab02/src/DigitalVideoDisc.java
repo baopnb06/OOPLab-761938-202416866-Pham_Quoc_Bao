@@ -2,6 +2,7 @@ package Lab02.src;
 
 public class DigitalVideoDisc {
     private int id;
+    private static int nbDigitalVideoDiscs = 0;
     private String title;
     private String category;
     private String director;
@@ -9,10 +10,18 @@ public class DigitalVideoDisc {
     private float cost;
     private float mass;
 
+    public static int getNbDigitalVideoDiscs() {
+        return nbDigitalVideoDiscs;
+    }
+
+
     //title
 
     public DigitalVideoDisc(String title) {
         this.title = title;
+        //update attribute
+        nbDigitalVideoDiscs++;
+        this.id = nbDigitalVideoDiscs;
     }
     // category, title and cost
 
@@ -20,6 +29,9 @@ public class DigitalVideoDisc {
         this.title = title;
         this.category = category;
         this.cost = cost;
+        //update attribute
+        nbDigitalVideoDiscs++;
+        this.id = nbDigitalVideoDiscs;
     }
 
 
@@ -30,6 +42,9 @@ public class DigitalVideoDisc {
         this.category = category;
         this.director = director;
         this.cost = cost;
+        //update attribute
+        nbDigitalVideoDiscs++;
+        this.id = nbDigitalVideoDiscs;
     }
 
 
@@ -42,6 +57,10 @@ public class DigitalVideoDisc {
         this.director = director;
         this.length = length;
         this.cost = cost;
+
+        // update attribute
+        nbDigitalVideoDiscs++;
+        this.id = nbDigitalVideoDiscs;
     }
 
     public DigitalVideoDisc(int id, String title, String category, String director, int length, float cost, float mass) {
@@ -57,10 +76,6 @@ public class DigitalVideoDisc {
 
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getTitle() {
