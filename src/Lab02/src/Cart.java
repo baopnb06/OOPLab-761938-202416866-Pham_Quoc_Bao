@@ -48,6 +48,26 @@ public class Cart {
 
         }
     }
+    // overloading
+    // use list to add
+    public void addDigitalVideoDisc(DigitalVideoDisc [] dvdList) {
+        for (DigitalVideoDisc disc : dvdList) {
+            if (qtyOrdered < MAX_NUMBERS_ORDERED) {
+                itemsOrdered[qtyOrdered] = disc;
+                qtyOrdered++;
+                System.out.println("The disc \"" + disc.getTitle() + "\" added successfully");
+            } else {
+                System.out.println("full!");
+                break;
+            }
+        }
+    }
+
+    // two elements
+    public void addDigitalVideoDisc(DigitalVideoDisc dvd1, DigitalVideoDisc dvd2) {
+        addDigitalVideoDisc(dvd1);
+        addDigitalVideoDisc(dvd2);
+    }
     public void searchById(int id) {
 
     }
