@@ -1,7 +1,6 @@
-package Lab01;
+package hust.soict.hedspi.lab01;
 
 import javax.swing.*;
-import javax.swing.plaf.synth.SynthTextAreaUI;
 
 public class ShowTwoNumbers {
     public static void main(String[] args) {
