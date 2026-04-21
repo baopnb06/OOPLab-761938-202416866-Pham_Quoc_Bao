@@ -1,4 +1,4 @@
-package Lab02.src;
+package hust.soict.dsai.test.disc;
 
 public class TestPassingParameter {
      public static void main(String[] args) {
