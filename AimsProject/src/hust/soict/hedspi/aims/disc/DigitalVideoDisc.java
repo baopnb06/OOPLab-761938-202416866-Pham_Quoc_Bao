@@ -73,7 +73,15 @@ public class DigitalVideoDisc {
         this.mass = mass;
     }
 
+    @Override
+    public String toString() {
+        return "DVD - " + this.getTitle() + " - " + this.getCategory() + " - "
+                + this.getDirector() + " - " + this.getLength() + ": " + this.getCost() + " $";
+    }
 
+    public boolean isMatch(String title) {
+        return this.getTitle().toLowerCase().contains(title.toLowerCase());
+    }
     public int getId() {
         return id;
     }

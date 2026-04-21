@@ -44,12 +44,13 @@ public class Cart {
     }
 
     public void printItems() {
-        for(int i = 0; i < qtyOrdered; i++) {
-            if(itemsOrdered[i] != null) {
-                System.out.println(i + "\t" + itemsOrdered[i].getTitle() + "\t" + itemsOrdered[i].getCost());
-            }
-
+        System.out.println("***********************CART***********************");
+        System.out.println("Ordered Items:");
+        for (int i = 0; i < qtyOrdered; i++) {
+            System.out.println((i + 1) + ". " + itemsOrdered[i].toString());
         }
+        System.out.println("Total cost: " + totalCost() + " $");
+        System.out.println("***************************************************");
     }
     // overloading
     // use list to add
@@ -72,10 +73,30 @@ public class Cart {
         addDigitalVideoDisc(dvd2);
     }
     public void searchById(int id) {
-
+        boolean found = false;
+        for (int i = 0; i < qtyOrdered; i++) {
+            if (itemsOrdered[i].getId() == id) {
+                System.out.println("Found match for ID " + id + ": " + itemsOrdered[i].toString());
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            System.out.println("No DVD with ID: " + id + " was found.");
+        }
     }
     public void searchByTitle(String title) {
-
+        boolean found = false;
+        System.out.println("Search results for title '" + title + "':");
+        for (int i = 0; i < qtyOrdered; i++) {
+            if (itemsOrdered[i].isMatch(title)) {
+                System.out.println("- " + itemsOrdered[i].toString());
+                found = true;
+            }
+        }
+        if (!found) {
+            System.out.println("No DVD with title: '" + title + "' was found.");
+        }
     }
 
     public void sortByTitle() {
