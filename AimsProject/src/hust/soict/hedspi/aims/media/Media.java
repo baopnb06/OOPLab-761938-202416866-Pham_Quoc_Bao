@@ -24,6 +24,10 @@ public abstract class Media {
         this.category = category;
         this.cost = cost;
     }
+    @Override
+    public String toString() {
+        return getTitle() + " - " + getCategory();
+    }
 
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }

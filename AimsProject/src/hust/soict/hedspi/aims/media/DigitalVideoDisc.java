@@ -41,10 +41,11 @@ public class DigitalVideoDisc extends Disc implements Playable {
         super(id, title, category, director, length, cost);
         this.mass = mass;
     }
+    // Trong file DigitalVideoDisc.java
     @Override
     public String toString() {
-        return "DVD - " + this.getTitle() + " - " + this.getCategory() + " - "
-                + this.getDirector() + " - " + this.getLength() + ": " + this.getCost() + " $";
+        return "DVD - " + super.toString() + " - "
+                + getDirector() + " - " + getLength() + ": " + getCost() + " $";
     }
 
     public boolean isMatch(String title) {
