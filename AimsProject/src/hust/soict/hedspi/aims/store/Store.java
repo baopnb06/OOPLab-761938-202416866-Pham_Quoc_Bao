@@ -3,6 +3,7 @@ package hust.soict.hedspi.aims.store;
 import hust.soict.hedspi.aims.media.Media;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Store {
     private ArrayList<Media> itemsInStore = new ArrayList<>();
@@ -24,9 +25,25 @@ public class Store {
     }
     public void printStore() {
         System.out.println("\n********** STORE INVENTORY **********");
-        for (int i = 0; i < itemsInStore.size(); i++) {
-            System.out.println((i + 1) + ". " + itemsInStore.get(i).toString());
+        if (itemsInStore.isEmpty()) {
+            System.out.println("The store is currently empty.");
+        } else {
+            for (int i = 0; i < itemsInStore.size(); i++) {
+                System.out.println((i + 1) + ". " + itemsInStore.get(i).toString());
+            }
         }
         System.out.println("*************************************\n");
+    }
+    public Media search(String title) {
+        for (Media item : itemsInStore) {
+            if (item.getTitle().equalsIgnoreCase(title)) {
+                return item;
+            }
+        }
+        return null;
+    }
+
+    public List<Media> getItemsInStore() {
+        return new ArrayList<>(itemsInStore);
     }
 }

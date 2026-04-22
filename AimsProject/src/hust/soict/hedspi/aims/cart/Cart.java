@@ -5,6 +5,7 @@ import hust.soict.hedspi.aims.media.Media;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class Cart {
     public static final int MAX_NUMBERS_ORDERED = 20;
@@ -41,9 +42,13 @@ public class Cart {
 
     public void printItems() {
         System.out.println("***********************CART***********************");
-        System.out.println("Ordered Items:");
-        for (int i = 0; i < itemsOrdered.size(); i++) {
-            System.out.println((i + 1) + ". " + itemsOrdered.get(i).toString());
+        if (itemsOrdered.isEmpty()) {
+            System.out.println("Your cart is empty.");
+        } else {
+            System.out.println("Ordered Items:");
+            for (int i = 0; i < itemsOrdered.size(); i++) {
+                System.out.println((i + 1) + ". " + itemsOrdered.get(i).toString());
+            }
         }
         System.out.println("Total cost: " + totalCost() + " $");
         System.out.println("***************************************************");
@@ -85,5 +90,32 @@ public class Cart {
     }
     public void getFreeItem() {
 
+    }
+
+    public Media findByTitle(String title) {
+        for (Media item : itemsOrdered) {
+            if (item.getTitle().equalsIgnoreCase(title)) {
+                return item;
+            }
+        }
+        return null;
+    }
+
+    public int countDvds() {
+        int count = 0;
+        for (Media item : itemsOrdered) {
+            if (item instanceof hust.soict.hedspi.aims.media.DigitalVideoDisc) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public void empty() {
+        itemsOrdered.clear();
+    }
+
+    public List<Media> getItemsOrdered() {
+        return new ArrayList<>(itemsOrdered);
     }
 }
