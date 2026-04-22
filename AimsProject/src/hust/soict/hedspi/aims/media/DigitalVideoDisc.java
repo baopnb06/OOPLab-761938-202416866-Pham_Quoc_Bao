@@ -1,13 +1,9 @@
-package hust.soict.hedspi.aims.disc;
+package hust.soict.hedspi.aims.media;
 
-public class DigitalVideoDisc {
-    private int id;
+public class DigitalVideoDisc extends Media {
     private static int nbDigitalVideoDiscs = 0;
-    private String title;
-    private String category;
     private String director;
     private int length;
-    private float cost;
     private float mass;
 
     public static int getNbDigitalVideoDiscs() {
@@ -18,33 +14,33 @@ public class DigitalVideoDisc {
     //title
 
     public DigitalVideoDisc(String title) {
-        this.title = title;
+        this.setTitle(title);
         //update attribute
         nbDigitalVideoDiscs++;
-        this.id = nbDigitalVideoDiscs;
+        this.setId(nbDigitalVideoDiscs);
     }
     // category, title and cost
 
     public DigitalVideoDisc(String title, String category, float cost) {
-        this.title = title;
-        this.category = category;
-        this.cost = cost;
+        this.setTitle(title);
+        this.setCategory(category);
+        this.setCost(cost);
         //update attribute
         nbDigitalVideoDiscs++;
-        this.id = nbDigitalVideoDiscs;
+        this.setId(nbDigitalVideoDiscs);
     }
 
 
     // director, category, title and cost
 
     public DigitalVideoDisc(String title, String category, String director, float cost) {
-        this.title = title;
-        this.category = category;
+        this.setTitle(title);
+        this.setCategory(category);
         this.director = director;
-        this.cost = cost;
+        this.setCost(cost);
         //update attribute
         nbDigitalVideoDiscs++;
-        this.id = nbDigitalVideoDiscs;
+        this.setId(nbDigitalVideoDiscs);
     }
 
 
@@ -52,26 +48,27 @@ public class DigitalVideoDisc {
 
 
     public DigitalVideoDisc(String title, String category, String director, int length, float cost) {
-        this.title = title;
-        this.category = category;
+        this.setTitle(title);
+        this.setCategory(category);
         this.director = director;
         this.length = length;
-        this.cost = cost;
+        this.setCost(cost);
 
         // update attribute
         nbDigitalVideoDiscs++;
-        this.id = nbDigitalVideoDiscs;
+       this.setId(nbDigitalVideoDiscs);
     }
 
     public DigitalVideoDisc(int id, String title, String category, String director, int length, float cost, float mass) {
-        this.id = id;
-        this.title = title;
-        this.category = category;
+        this.setId(id);
+        this.setTitle(title);
+        this.setCategory(category);
         this.director = director;
         this.length = length;
-        this.cost = cost;
+        this.setCost(cost);
         this.mass = mass;
     }
+
 
     @Override
     public String toString() {
@@ -82,25 +79,7 @@ public class DigitalVideoDisc {
     public boolean isMatch(String title) {
         return this.getTitle().toLowerCase().contains(title.toLowerCase());
     }
-    public int getId() {
-        return id;
-    }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
 
     public String getDirector() {
         return director;
@@ -116,14 +95,6 @@ public class DigitalVideoDisc {
 
     public void setLength(int length) {
         this.length = length;
-    }
-
-    public float getCost() {
-        return cost;
-    }
-
-    public void setCost(float cost) {
-        this.cost = cost;
     }
 
     public float getMass() {
