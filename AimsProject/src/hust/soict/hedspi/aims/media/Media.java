@@ -2,6 +2,8 @@ package hust.soict.hedspi.aims.media;
 
 import org.w3c.dom.html.HTMLImageElement;
 
+import java.util.Comparator;
+
 public abstract class Media {
     private int id;
     private String title;
@@ -40,6 +42,8 @@ public abstract class Media {
         }
         return this.title.equalsIgnoreCase(other.getTitle());
     }
+    public static final Comparator<Media> COMPARE_BY_TITLE_COST = new MediaComparatorByTitleCost();
+    public static final Comparator<Media> COMPARE_BY_COST_TITLE = new MediaComparatorByCostTitle();
 
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
