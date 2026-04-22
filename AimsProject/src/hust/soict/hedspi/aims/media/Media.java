@@ -1,5 +1,7 @@
 package hust.soict.hedspi.aims.media;
 
+import org.w3c.dom.html.HTMLImageElement;
+
 public abstract class Media {
     private int id;
     private String title;
@@ -8,6 +10,21 @@ public abstract class Media {
 
     public Media() {
     }
+    public Media(String title, String category, float cost) {
+        this.title = title;
+        this.category = category;
+        this.cost = cost;
+    }
+    public Media(String title) {
+        this.title = title;
+    }
+    public  Media(int id, String title, String category, float cost) {
+        this.id = id;
+        this.title = title;
+        this.category = category;
+        this.cost = cost;
+    }
+
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
 
