@@ -4,7 +4,6 @@ import org.w3c.dom.html.HTMLImageElement;
 
 public class DigitalVideoDisc extends Disc implements Playable {
     private static int nbDigitalVideoDiscs = 0;
-    private float mass;
     public static int getNbDigitalVideoDiscs() {
         return nbDigitalVideoDiscs;
     }
@@ -37,9 +36,8 @@ public class DigitalVideoDisc extends Disc implements Playable {
         nbDigitalVideoDiscs++;
        this.setId(nbDigitalVideoDiscs);
     }
-    public DigitalVideoDisc(int id, String title, String category, String director, int length, float cost, float mass) {
+    public DigitalVideoDisc(int id, String title, String category, String director, int length, float cost) {
         super(id, title, category, director, length, cost);
-        this.mass = mass;
     }
     // Trong file DigitalVideoDisc.java
     @Override
@@ -52,13 +50,6 @@ public class DigitalVideoDisc extends Disc implements Playable {
         return this.getTitle().toLowerCase().contains(title.toLowerCase());
     }
 
-    public float getMass() {
-        return mass;
-    }
-
-    public void setMass(float mass) {
-        this.mass = mass;
-    }
     @Override
     public void play() {
         System.out.println("Playing DVD: " + this.getTitle());
