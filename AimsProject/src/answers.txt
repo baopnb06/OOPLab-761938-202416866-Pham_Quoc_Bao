@@ -1,37 +1,54 @@
- - Section 10: "If you create a constructor method to build a DVD by title then create a constructor method to build a DVD by category.
-Does JAVA allow you to do this?"
--> Không
-Bởi vì:
- + Vi phạm quy tắc nạp chồng:để nạp chồng một constructor, các phương thức phải có chữ ký khác nhau. Chữ ký này dựa trên:
-    * Số lượng tham số.
-    * Kiểu dữ liệu của tham số.
-    * Thứ tự của các kiểu dữ liệu.
- + Sự trùng lặp về kiểu dữ liệu: title và category thông thường đều có kiểu dữ liệu là String.
-    Constructor 1: public DVD(String title) { ... }
-    Constructor 2: public DVD(String category) { ... }
-+ Lỗi biên dịch: Vì cả hai constructor đều chỉ nhận vào một tham số kiểu String,
-trình biên dịch Java sẽ không thể phân biệt được chúng khi khởi tạo đối tượng (ví dụ: new DVD("Action")
-thì Java không biết "Action" là tiêu đề hay thể loại). Do đó, Java sẽ báo lỗi "Duplicate method".
+----------------------------------------------------------------
+* 14. Các lớp nào là "Aggregates" của các lớp khác?
+Aggregation (Quan hệ toàn thể - bộ phận) xảy ra khi một lớp chứa một danh sách các đối tượng của lớp khác.
+Bao gồm:
+Lớp Cart: Là tập hợp của các đối tượng Media. Nó chứa một ArrayList<Media>.
 
-------------------------------------------------------------------------------------------------------------------------
-- Section 15: "Is JAVA a Pass by Value or a Pass by Reference programming language?"
--> java là ngôn ngữ lập trình chỉ truyền tham trị
-* Giải thích:
-+ Đối với các kiểu dữ liệu nguyên thủy: Như int, double, boolean... Java sẽ tạo ra một bản sao của giá trị và truyền bản sao đó
-vào phương thức. Mọi thay đổi bên trong phương thức không làm ảnh hưởng đến biến gốc bên ngoài.
-+ Đối với các kiểu dữ liệu đối tượng:
-    * Khi truyền một đối tượng vào phương thức, Java không truyền chính cái đối tượng đó, và cũng không truyền tham chiếu gốc.
-    Thay vào đó, nó tạo ra một bản sao của địa chỉ vùng nhớ của đối tượng đó và truyền bản sao địa chỉ này đi.
-    Vì cả biến gốc và biến trong phương thức đều cùng trỏ về một địa chỉ vùng nhớ, ta có thể thay đổi nội dung bên trong đối tượng.
-    Tuy nhiên, nếu bạn gán biến đó cho một đối tượng mới (new Object()), biến gốc bên ngoài vẫn sẽ không thay đổi.
-    * Ví dụ:
-Nếu có một phương thức swap(Object a, Object b), ta sẽ không bao giờ có thể tráo đổi vị trí của hai đối tượng gốc bên ngoài được
- vì Java chỉ đang làm việc trên bản sao của các địa chỉ mà thôi.
-------------------------------------------------------------------------------------------------------------------------
- -  * After the call of swap(jungleDVD, cinderellaDVD), why does the title of these two objects still remain?
- -> Java là truyền tham trị. Hàm swap chỉ tráo đổi các biến cục bộ (bản sao tham chiếu) bên trong hàm,
- không làm thay đổi địa chỉ mà các biến gốc ở hàm main đang trỏ tới.
- ------------------------------------------------------------------------------------------------------------------------
- - * After the call of changeTitle(jungleDVD, cinderellaDVD.getTitle()), why is the title of the JungleDVD changed?
- Mặc dù truyền tham trị, nhưng bản sao tham chiếu vẫn trỏ tới cùng một đối tượng trong bộ nhớ Heap.
- Hàm changeTitle đã sử dụng tham chiếu này để gọi phương thức setTitle(), trực tiếp sửa đổi dữ liệu bên trong đối tượng gốc.
+Lớp Store: Tương tự như Cart, là tập hợp của các Media có trong cửa hàng.
+
+Lớp CompactDisc: Là tập hợp của các đối tượng Track. Nó chứa một ArrayList<Track>.
+----------------------------------------------------------------
+* 17.
+1. Lớp nào nên implement interface Comparable?
+Lớp Media nên implement interface Comparable<Media>.
+Lý do: Vì Media là lớp cha của DigitalVideoDisc, Book và CompactDisc.
+Khi định nghĩa khả năng so sánh ở lớp cha, tất cả các lớp con sẽ tự động có khả năng so sánh này,
+cho phép sắp xếp một danh sách hỗn hợp các loại Media trong giỏ hàng.
+
+2. Triển khai hàm compareTo() như thế nào?
+Ghi đè phương thức này trong lớp Media để phản ánh thứ tự ưu tiên
+(sắp xếp theo Tiêu đề, nếu trùng thì xét đến Giá).
+/*
+@Override
+public int compareTo(Media other) {
+    // So sánh tiêu đề
+    int titleDiff = this.title.compareToIgnoreCase(other.getTitle());
+    if (titleDiff != 0) {
+        return titleDiff;
+    }
+    // Nếu tiêu đề giống nhau, so sánh giá (giảm dần)
+    return Float.compare(other.getCost(), this.cost);
+}
+*/
+3. Có thể có 2 quy tắc sắp xếp (Title-Cost và Cost-Title) nếu dùng Comparable không
+->Không.
+
+Giải thích: Interface Comparable chỉ cho phép định nghĩa một quy tắc sắp xếp duy nhất.
+
+Nếu muốn có nhiều quy tắc khác nhau để người dùng lựa chọn
+(lúc thì xếp theo giá, lúc thì xếp theo tên) -> bắt buộc phải dùng Comparator.
+
+4. Nếu DVD có quy tắc riêng (Title -> Length -> Cost), sửa code thế nào?
+Để xử lý trường hợp đặc thù này mà vẫn giữ được tính linh hoạt, ta nên làm như sau:
+
+Ghi đè compareTo tại lớp DigitalVideoDisc: Có thể ghi đè lại hàm compareTo ngay trong lớp DVD
+để nó thực hiện logic so sánh riêng (Title -> Length -> Cost) thay vì dùng logic chung của lớp Media.
+
+Sử dụng kiểm tra kiểu (Type Checking): Trong hàm so sánh,dùng instanceof để kiểm tra:
+
++ Nếu cả hai đều là DVD: So sánh theo Title -> Length -> Cost.
+
++ Nếu không: Quay lại dùng quy tắc chung của Media.
+
+Cách tốt nhất là dùng Comparator riêng cho DVD.
+Khi cần sắp xếp danh sách toàn DVD, ta truyền bộ DVDComparator vào hàm Collections.sort().
