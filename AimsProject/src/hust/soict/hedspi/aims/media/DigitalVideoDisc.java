@@ -2,7 +2,7 @@ package hust.soict.hedspi.aims.media;
 
 import org.w3c.dom.html.HTMLImageElement;
 
-public class DigitalVideoDisc extends Disc {
+public class DigitalVideoDisc extends Disc implements Playable {
     private static int nbDigitalVideoDiscs = 0;
     private float mass;
     public static int getNbDigitalVideoDiscs() {
@@ -57,5 +57,10 @@ public class DigitalVideoDisc extends Disc {
 
     public void setMass(float mass) {
         this.mass = mass;
+    }
+    @Override
+    public void play() {
+        System.out.println("Playing DVD: " + this.getTitle());
+        System.out.println("DVD length: " + this.getLength());
     }
 }
