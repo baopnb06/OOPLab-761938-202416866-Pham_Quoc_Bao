@@ -28,6 +28,18 @@ public abstract class Media {
     public String toString() {
         return getTitle() + " - " + getCategory();
     }
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Media)) {
+            return false;
+        }
+        Media other = (Media) obj;
+
+        if (this.title == null || other.getTitle() == null) {
+            return false;
+        }
+        return this.title.equalsIgnoreCase(other.getTitle());
+    }
 
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
