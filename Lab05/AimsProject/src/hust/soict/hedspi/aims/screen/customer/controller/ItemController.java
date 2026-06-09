@@ -1,14 +1,17 @@
 package hust.soict.hedspi.aims.screen.customer.controller;
 
+import hust.soict.hedspi.aims.cart.Cart;
 import hust.soict.hedspi.aims.media.Media;
 import hust.soict.hedspi.aims.media.Playable;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 public class ItemController {
     private Media media;
+    private Cart cart;
 
     @FXML
     private Button btnAddToCart;
@@ -21,7 +24,9 @@ public class ItemController {
 
     @FXML
     private Label lblTitle;
-
+    public ItemController(Cart cart) {
+        this.cart = cart;
+    }
     public void setData(Media media) {
         this.media = media;
 
@@ -38,10 +43,22 @@ public class ItemController {
 
     @FXML
     void btnAddToCartClicked(ActionEvent event) {
-        System.out.println("Added to cart: " + media.getTitle());
+        cart.addMedia(media);
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Message");
+        alert.setHeaderText("Success");
+        alert.setContentText(media.getTitle() + " has been added to cart!");
+        alert.showAndWait();
     }
     @FXML
     void btnPlayClicked(ActionEvent event) {
-        System.out.println("Playing: " + media.getTitle());
+        if (media instanceof Playable) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("AIMS Player");
+            alert.setHeaderText(null);
+            alert.setContentText("Playing media: " + media.getTitle());
+            alert.showAndWait();
+        }
     }
 }

@@ -8,10 +8,12 @@ import javafx.stage.Stage;
 import hust.soict.hedspi.aims.media.Book;
 import hust.soict.hedspi.aims.media.DigitalVideoDisc;
 import hust.soict.hedspi.aims.store.Store;
+import hust.soict.hedspi.aims.cart.Cart;
 import hust.soict.hedspi.aims.screen.customer.controller.ViewStoreController;
 
 public class TestViewStoreScreen extends Application {
     private static Store store;
+    private static Cart cart;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -19,7 +21,7 @@ public class TestViewStoreScreen extends Application {
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(STORE_FXML_FILE_PATH));
 
-        ViewStoreController viewStoreController = new ViewStoreController(store);
+        ViewStoreController viewStoreController = new ViewStoreController(store, cart);
         fxmlLoader.setController(viewStoreController);
 
         Parent root = fxmlLoader.load();
@@ -30,7 +32,9 @@ public class TestViewStoreScreen extends Application {
     }
 
     public static void main(String[] args) {
+
         store = new Store();
+        cart = new Cart();
 
         store.addMedia(new DigitalVideoDisc("Harry Potter and the Philosopher's Stone (2001)", "Fantasy", 3.0f));
         store.addMedia(new DigitalVideoDisc("Harry Potter and the Chamber of Secrets (2002)", "Fantasy", 3.5f));

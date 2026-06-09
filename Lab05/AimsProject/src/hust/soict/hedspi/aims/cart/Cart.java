@@ -1,15 +1,11 @@
 package hust.soict.hedspi.aims.cart;
 
-
 import hust.soict.hedspi.aims.media.Media;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 public class Cart {
     public static final int MAX_NUMBERS_ORDERED = 20;
-    private ArrayList<Media> itemsOrdered = new ArrayList<>();
+    private ObservableList<Media> itemsOrdered = FXCollections.observableArrayList();
 
     public void addMedia(Media media) {
         if (itemsOrdered.size() < MAX_NUMBERS_ORDERED) {
@@ -67,6 +63,7 @@ public class Cart {
             System.out.println("No media with ID: " + id + " was found.");
         }
     }
+
     public void searchByTitle(String title) {
         boolean found = false;
         System.out.println("Search results for title '" + title + "':");
@@ -82,14 +79,11 @@ public class Cart {
     }
 
     public void sortByTitle() {
-        Collections.sort(itemsOrdered, Media.COMPARE_BY_TITLE_COST);
+        FXCollections.sort(itemsOrdered, Media.COMPARE_BY_TITLE_COST);
     }
 
     public void sortByCost() {
-        Collections.sort(itemsOrdered, Media.COMPARE_BY_COST_TITLE);
-    }
-    public void getFreeItem() {
-
+        FXCollections.sort(itemsOrdered, Media.COMPARE_BY_COST_TITLE);
     }
 
     public Media findByTitle(String title) {
@@ -115,7 +109,7 @@ public class Cart {
         itemsOrdered.clear();
     }
 
-    public List<Media> getItemsOrdered() {
-        return new ArrayList<>(itemsOrdered);
+    public ObservableList<Media> getItemsOrdered() {
+        return itemsOrdered;
     }
 }
