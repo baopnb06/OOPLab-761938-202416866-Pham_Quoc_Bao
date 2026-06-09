@@ -1,6 +1,8 @@
 package hust.soict.hedspi.aims.screen.customer.controller;
 
 import hust.soict.hedspi.aims.cart.Cart;
+import hust.soict.hedspi.aims.exception.LimitExceededException;
+import hust.soict.hedspi.aims.exception.PlayerException;
 import hust.soict.hedspi.aims.media.Media;
 import hust.soict.hedspi.aims.media.Playable;
 import javafx.event.ActionEvent;
@@ -43,22 +45,40 @@ public class ItemController {
 
     @FXML
     void btnAddToCartClicked(ActionEvent event) {
-        cart.addMedia(media);
+        try {
+            cart.addMedia(media);
 
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Message");
-        alert.setHeaderText("Success");
-        alert.setContentText(media.getTitle() + " has been added to cart!");
-        alert.showAndWait();
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Message");
+            alert.setHeaderText("Success");
+            alert.setContentText(media.getTitle() + " has been added to cart!");
+            alert.showAndWait();
+        } catch (LimitExceededException exception) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Message");
+            alert.setHeaderText("Cannot add media to cart");
+            alert.setContentText(exception.getMessage());
+            alert.showAndWait();
+        }
     }
     @FXML
     void btnPlayClicked(ActionEvent event) {
         if (media instanceof Playable) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("AIMS Player");
-            alert.setHeaderText(null);
-            alert.setContentText("Playing media: " + media.getTitle());
-            alert.showAndWait();
+            try {
+                ((Playable) media).play();
+
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("AIMS Player");
+                alert.setHeaderText(null);
+                alert.setContentText("Playing media: " + media.getTitle());
+                alert.showAndWait();
+            } catch (PlayerException exception) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("AIMS Player");
+                alert.setHeaderText("Cannot play media");
+                alert.setContentText(exception.getMessage());
+                alert.showAndWait();
+            }
         }
     }
 }

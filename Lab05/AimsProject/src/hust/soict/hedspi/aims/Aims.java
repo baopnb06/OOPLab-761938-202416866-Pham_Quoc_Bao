@@ -1,8 +1,12 @@
 package hust.soict.hedspi.aims;
 
 import hust.soict.hedspi.aims.cart.Cart;
+import hust.soict.hedspi.aims.exception.LimitExceededException;
+import hust.soict.hedspi.aims.exception.PlayerException;
 import hust.soict.hedspi.aims.store.Store;
 import hust.soict.hedspi.aims.media.*;
+
+import javax.swing.JOptionPane;
 import java.util.Scanner;
 
 public class Aims {
@@ -100,7 +104,7 @@ public class Aims {
                     String titleAdd = scanner.nextLine();
                     Media mediaToAdd = store.search(titleAdd);
                     if (mediaToAdd != null) {
-                        cart.addMedia(mediaToAdd);
+                        addMediaToCart(mediaToAdd);
                         if (mediaToAdd instanceof DigitalVideoDisc) {
                             System.out.println("Number of DVDs in cart: " + cart.countDvds());
                         }
@@ -115,7 +119,7 @@ public class Aims {
                     Media mediaToPlay = store.search(titlePlay);
                     if (mediaToPlay != null) {
                         if (mediaToPlay instanceof Playable) {
-                            ((Playable) mediaToPlay).play();
+                            playMedia(mediaToPlay);
                         } else {
                             System.out.println("This media type is not playable (Books cannot be played).");
                         }
@@ -143,14 +147,14 @@ public class Aims {
 
             switch (choice) {
                 case 1:
-                    cart.addMedia(media);
+                    addMediaToCart(media);
                     if (media instanceof DigitalVideoDisc) {
                         System.out.println("Number of DVDs in cart: " + cart.countDvds());
                     }
                     break;
                 case 2:
                     if (media instanceof Playable) {
-                        ((Playable) media).play();
+                        playMedia(media);
                     } else {
                         System.out.println("This media cannot be played.");
                     }
@@ -283,7 +287,7 @@ public class Aims {
                     if (mediaToPlay == null) {
                         System.out.println("Media not found in cart!");
                     } else if (mediaToPlay instanceof Playable) {
-                        ((Playable) mediaToPlay).play();
+                        playMedia(mediaToPlay);
                     } else {
                         System.out.println("This media cannot be played.");
                     }
@@ -439,5 +443,45 @@ public class Aims {
                 System.out.print("Invalid number. Please enter again: ");
             }
         }
+    }
+
+    private static void playMedia(Media media) {
+        try {
+            ((Playable) media).play();
+        } catch (PlayerException exception) {
+            System.err.println(exception.getMessage());
+            System.err.println(exception.toString());
+            exception.printStackTrace();
+            JOptionPane.showMessageDialog(
+                    null,
+                    exception.getMessage(),
+                    resolvePlayerErrorTitle(exception),
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
+
+    private static void addMediaToCart(Media media) {
+        try {
+            cart.addMedia(media);
+        } catch (LimitExceededException exception) {
+            System.err.println(exception.getMessage());
+        }
+    }
+
+    private static String resolvePlayerErrorTitle(PlayerException exception) {
+        String message = exception.getMessage();
+        if (message != null) {
+            if (message.contains("DVD")) {
+                return "Illegal DVD Length";
+            }
+            if (message.contains("CD")) {
+                return "Illegal CD Length";
+            }
+            if (message.contains("Track")) {
+                return "Illegal Track Length";
+            }
+        }
+        return "AIMS Player Error";
     }
 }

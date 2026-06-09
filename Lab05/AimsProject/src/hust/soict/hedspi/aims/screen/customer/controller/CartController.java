@@ -1,5 +1,6 @@
 package hust.soict.hedspi.aims.screen.customer.controller;
 
+import hust.soict.hedspi.aims.exception.PlayerException;
 import hust.soict.hedspi.aims.store.Store;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
@@ -102,11 +103,21 @@ public class CartController {
     void btnPlayPressed(ActionEvent event) {
         Media media = tblMedia.getSelectionModel().getSelectedItem();
         if (media != null && media instanceof Playable) {
-            Alert alert = new Alert(AlertType.INFORMATION);
-            alert.setTitle("AIMS Player");
-            alert.setHeaderText(null);
-            alert.setContentText("Playing media: " + media.getTitle());
-            alert.showAndWait();
+            try {
+                ((Playable) media).play();
+
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("AIMS Player");
+                alert.setHeaderText(null);
+                alert.setContentText("Playing media: " + media.getTitle());
+                alert.showAndWait();
+            } catch (PlayerException exception) {
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("AIMS Player");
+                alert.setHeaderText("Cannot play media");
+                alert.setContentText(exception.getMessage());
+                alert.showAndWait();
+            }
         }
     }
 
