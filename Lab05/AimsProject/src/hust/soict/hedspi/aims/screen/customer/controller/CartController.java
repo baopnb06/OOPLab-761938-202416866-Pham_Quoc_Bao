@@ -121,6 +121,18 @@ public class CartController {
         }
     }
 
+    @FXML
+    void btnPlaceOrderPressed(ActionEvent event) {
+        cart.empty();
+        updateTotalCost();
+
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Order");
+        alert.setHeaderText("Order placed");
+        alert.setContentText("An order has been created.");
+        alert.showAndWait();
+    }
+
     private void showFilteredMedia(String filterText) {
         filteredList.setPredicate(media -> {
             if (filterText == null || filterText.isEmpty()) {
